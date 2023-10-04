@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/kurly
+    username: dev
+    password: dev_password
+    driver-class-name: com.mysql.cj.jdbc.Driver
