@@ -4,3 +4,18 @@ spring:
     username: dev
     password: dev_password
     driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+logging:
+  level:
+    root: info
+    ms.study.kurly: debug
+    # show jpa sqls and parameter values in log
+    org.hibernate.SQL: debug
+    org.hibernate.type: trace
+    org.hibernate.type.descriptor.sql.BasicBinder: trace
+    org.hibernate.type.descriptor.sql.BasicExtractor: trace
+    org.hibernate.orm.jdbc.bind: trace

@@ -1,0 +1,11 @@
+
+### Signup
+POST {{url}}/signup
+Content-Type: application/json
+
+{
+  "email": "email",
+  "password": "password",
+  "name": "name",
+  "mobileNumber": "mobileNumber"
+}
