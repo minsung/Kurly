@@ -40,3 +40,26 @@
     - **이메일 존재**: `true`
     - **이메일 미존재**: `false`
 - **실패**: HTTP 상태 코드 400
+
+## 로그인
+
+전달된 이메일과 비밀번호가 존재하는지 여부를 검사하여 결과를 반환합니다.
+
+### 엔드포인트
+- **요청 메서드**: POST
+- **URL**: `{{url}}/login`
+- **Content-Type**: `application/json`
+
+### 요청 바디 (Request Body)
+```json
+{
+  "email": "email",
+  "password": "password"
+}
+```
+
+### 응답
+- **성공**: HTTP 상태 코드 200
+    - **로그인 성공**: `true`
+    - **로그인 실패**: `false`
+- **실패**: HTTP 상태 코드 400

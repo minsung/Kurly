@@ -3,6 +3,7 @@ package ms.study.kurly.feature.user;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import ms.study.kurly.feature.user.model.LoginModel;
 import ms.study.kurly.feature.user.model.SignupModel;
 import ms.study.kurly.feature.user.model.UserMapper;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,12 @@ public class UserService {
     }
 
     public Boolean isExistEmail(String email) {
+
         return userRepository.existsByEmail(email);
+    }
+
+    public Boolean login(@Valid LoginModel dto) {
+
+        return userRepository.existsByEmailAndPassword(dto.getEmail(), dto.getPassword());
     }
 }
