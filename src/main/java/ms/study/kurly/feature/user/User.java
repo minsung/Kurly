@@ -14,7 +14,7 @@ import java.io.Serializable;
 @Builder
 @DynamicUpdate
 @Entity
-public class User implements Serializable {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
