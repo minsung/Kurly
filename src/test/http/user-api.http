@@ -1,5 +1,5 @@
 
-### Signup
+### 회원 가입
 POST {{url}}/signup
 Content-Type: application/json
 
@@ -10,6 +10,6 @@ Content-Type: application/json
   "mobileNumber": "mobileNumber"
 }
 
-### Exist email
+### 중복된 이메일 존재 여부 확인
 GET {{url}}/exist/email?email=email
 Content-Type: application/json
