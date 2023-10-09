@@ -13,3 +13,12 @@ Content-Type: application/json
 ### 중복된 이메일 존재 여부 확인
 GET {{url}}/exist/email?email=email
 Content-Type: application/json
+
+### 로그인
+POST {{url}}/login
+Content-Type: application/json
+
+{
+  "email": "email",
+  "password": "password"
+}
