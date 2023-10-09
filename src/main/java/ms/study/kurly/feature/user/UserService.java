@@ -21,4 +21,8 @@ public class UserService {
 
         User save = userRepository.save(mapper.toEntity(model));
     }
+
+    public Boolean isExistEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
 }

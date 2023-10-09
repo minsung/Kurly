@@ -9,3 +9,7 @@ Content-Type: application/json
   "name": "name",
   "mobileNumber": "mobileNumber"
 }
+
+### Exist email
+GET {{url}}/exist/email?email=email
+Content-Type: application/json
