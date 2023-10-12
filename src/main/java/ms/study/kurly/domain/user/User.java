@@ -1,4 +1,4 @@
-package ms.study.kurly.feature.user;
+package ms.study.kurly.domain.user;
 
 import jakarta.persistence.*;
 import lombok.*;

@@ -1,15 +1,15 @@
-package ms.study.kurly.feature.user.model;
+package ms.study.kurly.domain.user.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
-import org.hibernate.validator.constraints.Length;
+import ms.study.kurly.domain.user.User;
 
 @Data
 @Builder
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 @Setter(AccessLevel.PRIVATE)
-public class SignupModel {
+public class SignupRequest {
 
     @NotBlank
     private String email;
@@ -22,4 +22,13 @@ public class SignupModel {
 
     @NotBlank
     private String mobileNumber;
+
+    public User toEntity() {
+        return User.builder()
+                .email(email)
+                .password(password)
+                .name(name)
+                .mobileNumber(mobileNumber)
+                .build();
+    }
 }
