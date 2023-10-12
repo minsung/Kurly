@@ -1,11 +1,9 @@
-package ms.study.kurly.feature.user;
+package ms.study.kurly.domain.user;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import ms.study.kurly.feature.user.model.LoginModel;
-import ms.study.kurly.feature.user.model.SignupModel;
-import ms.study.kurly.feature.user.model.UserMapper;
+import ms.study.kurly.domain.user.dto.LoginRequest;
+import ms.study.kurly.domain.user.dto.SignupRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,11 +14,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final UserMapper mapper;
 
-    public void signup(@Valid SignupModel model) {
+    public void signup(SignupRequest dto) {
 
-        User save = userRepository.save(mapper.toEntity(model));
+        User save = userRepository.save(dto.toEntity());
     }
 
     public Boolean isExistEmail(String email) {
@@ -28,7 +25,7 @@ public class UserService {
         return userRepository.existsByEmail(email);
     }
 
-    public Boolean login(@Valid LoginModel dto) {
+    public Boolean login(LoginRequest dto) {
 
         return userRepository.existsByEmailAndPassword(dto.getEmail(), dto.getPassword());
     }

@@ -1,4 +1,4 @@
-package ms.study.kurly.feature.user.model;
+package ms.study.kurly.domain.user.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 @Setter(AccessLevel.PRIVATE)
-public class LoginModel {
+public class LoginRequest {
 
     @NotBlank
     private String email;

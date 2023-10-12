@@ -1,6 +1,5 @@
-package ms.study.kurly.feature.user;
+package ms.study.kurly.domain.user;
 
-import ms.study.kurly.feature.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User, Long> {

@@ -1,9 +1,9 @@
-package ms.study.kurly.feature.user;
+package ms.study.kurly.domain.user;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import ms.study.kurly.feature.user.model.LoginModel;
-import ms.study.kurly.feature.user.model.SignupModel;
+import ms.study.kurly.domain.user.dto.LoginRequest;
+import ms.study.kurly.domain.user.dto.SignupRequest;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -13,7 +13,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/signup")
-    public void signup(@Valid @RequestBody SignupModel request) {
+    public void signup(@Valid @RequestBody SignupRequest request) {
 
         userService.signup(request);
     }
@@ -25,7 +25,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public Boolean login(@Valid @RequestBody LoginModel dto) {
+    public Boolean login(@Valid @RequestBody LoginRequest dto) {
 
         return userService.login(dto);
     }
