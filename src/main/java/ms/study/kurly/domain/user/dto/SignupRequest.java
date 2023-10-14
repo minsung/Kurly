@@ -1,7 +1,10 @@
 package ms.study.kurly.domain.user.dto;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
+import ms.study.kurly.common.validator.MobileNumber;
+import ms.study.kurly.common.validator.ValidPassword;
 import ms.study.kurly.domain.user.User;
 
 @Data
@@ -11,16 +14,20 @@ import ms.study.kurly.domain.user.User;
 @Setter(AccessLevel.PRIVATE)
 public class SignupRequest {
 
+    @Email
     @NotBlank
     private String email;
 
-    @NotBlank
+    @ValidPassword
     private String password;
+
+    @NotBlank
+    private String confirmPassword;
 
     @NotBlank
     private String name;
 
-    @NotBlank
+    @MobileNumber
     private String mobileNumber;
 
     public User toEntity() {
