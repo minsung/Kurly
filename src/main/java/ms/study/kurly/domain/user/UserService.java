@@ -17,6 +17,10 @@ public class UserService {
 
     public void signup(SignupRequest dto) {
 
+        if (dto.getPassword() != dto.getConfirmPassword()) {
+            // TODO: throw exception
+        }
+
         User save = userRepository.save(dto.toEntity());
     }
 
