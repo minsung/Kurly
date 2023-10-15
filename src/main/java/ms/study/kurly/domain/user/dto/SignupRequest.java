@@ -4,7 +4,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import ms.study.kurly.common.validator.MobileNumber;
-import ms.study.kurly.common.validator.ValidPassword;
+import ms.study.kurly.common.validator.Password;
 import ms.study.kurly.domain.user.User;
 
 @Data
@@ -14,11 +14,10 @@ import ms.study.kurly.domain.user.User;
 @Setter(AccessLevel.PRIVATE)
 public class SignupRequest {
 
-    @Email
-    @NotBlank
+    @Email(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$")
     private String email;
 
-    @ValidPassword
+    @Password
     private String password;
 
     @NotBlank
