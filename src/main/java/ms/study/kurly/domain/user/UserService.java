@@ -2,8 +2,10 @@ package ms.study.kurly.domain.user;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import ms.study.kurly.common.Error;
 import ms.study.kurly.domain.user.dto.LoginRequest;
 import ms.study.kurly.domain.user.dto.SignupRequest;
+import ms.study.kurly.domain.user.exception.UserException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,11 +19,15 @@ public class UserService {
 
     public void signup(SignupRequest dto) {
 
-        if (dto.getPassword() != dto.getConfirmPassword()) {
-            // TODO: throw exception
+        if (!dto.getPassword().equals(dto.getConfirmPassword())) {
+            throw new UserException(Error.PASSWORD_NOT_MATCH);
         }
 
-        User save = userRepository.save(dto.toEntity());
+        if (userRepository.existsByEmail(dto.getEmail())) {
+            throw new UserException(Error.EMAIL_ALREADY_EXISTS);
+        }
+
+        userRepository.save(dto.toEntity());
     }
 
     public Boolean isExistEmail(String email) {
