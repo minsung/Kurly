@@ -5,9 +5,11 @@ import lombok.RequiredArgsConstructor;
 import ms.study.kurly.common.Error;
 import ms.study.kurly.domain.user.dto.LoginRequest;
 import ms.study.kurly.domain.user.dto.SignupRequest;
-import ms.study.kurly.domain.user.exception.UserException;
+import ms.study.kurly.common.exception.KurlyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
@@ -20,9 +22,18 @@ public class UserController {
     public void signup(@Valid @RequestBody SignupRequest request) {
 
         if (!request.getPassword().equals(request.getConfirmPassword())) {
-            throw new UserException(Error.PASSWORD_NOT_MATCH);
+            Error error = Error.PASSWORD_NOT_MATCH;
+            Map<Object, Object> data = Map.of(
+                    "code", error.getCode(),
+                    "message", error.getDetailMessage(),
+                    "password", request.getPassword(),
+                    "confirmPassword", request.getConfirmPassword()
+            );
+
+            throw new KurlyException(error, data);
         }
 
+        userService.isExistEmail(request.getEmail());
         userService.signup(request);
     }
 

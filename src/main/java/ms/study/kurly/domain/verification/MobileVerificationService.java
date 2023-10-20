@@ -12,7 +12,7 @@ public class MobileVerificationService {
 
     private final MobileVerificationRepository mobileVerificationRepository;
 
-    public MobileVerification getVerificationCode(MobileVerificationCodeRequest dto) {
+    public void sendVerificationCode(MobileVerificationCodeRequest dto) {
 
         String verificationCode = String.valueOf((int) (Math.random() * 1000000));
 
@@ -21,6 +21,6 @@ public class MobileVerificationService {
                 .verificationCode(verificationCode)
                 .build();
 
-        return mobileVerificationRepository.save(mobileVerification);
+        mobileVerificationRepository.save(mobileVerification);
     }
 }
