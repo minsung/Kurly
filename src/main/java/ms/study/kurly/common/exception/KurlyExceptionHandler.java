@@ -1,8 +1,9 @@
-package ms.study.kurly.domain.user.exception;
+package ms.study.kurly.common.exception;
 
 import ms.study.kurly.common.Error;
 import ms.study.kurly.common.Response;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -10,22 +11,28 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-public class UserExceptionHandler {
+public class KurlyExceptionHandler {
 
-    @ExceptionHandler(UserException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Response<Void> handleUserException(UserException e) {
+    @ExceptionHandler(KurlyException.class)
+    public ResponseEntity<Response<Void>> handleUserException(KurlyException e) {
 
-        return Response.<Void>builder()
+        HttpStatus status = switch (e.getError()) {
+            case EMAIL_ALREADY_EXISTS -> HttpStatus.CONFLICT;
+            case PASSWORD_NOT_MATCH -> HttpStatus.BAD_REQUEST;
+            default -> HttpStatus.INTERNAL_SERVER_ERROR;
+        };
+
+        return ResponseEntity.status(status).body(Response.<Void>builder()
                 .code(e.getError().getCode())
                 .message(e.getError().getMessage())
-                .build();
+                .build());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Response<Void> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
 
+        // TODO: 에러 로그 추가
         BindingResult bi = e.getBindingResult();
         Error error = getErrorCode(bi);
 
