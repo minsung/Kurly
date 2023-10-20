@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum Error {
 
+    EMAIL_NOT_EXISTS(1000, "존재하지 않는 이메일"),
     INVALID_EMAIL(1001, "이메일 형식 오류"),
     INVALID_PASSWORD(1002, "비밀번호 형식 오류"),
     INVALID_MOBILE_NUMBER(1003, "휴대폰 번호 형식 오류"),
@@ -16,4 +17,6 @@ public enum Error {
 
     private final Integer code;
     private final String message;
+    // http code
+    // 내, 외부용 메시지 분리 -> 내부용은 응답에 포함되지 않음
 }

@@ -19,10 +19,6 @@ public class UserService {
 
     public void signup(SignupRequest dto) {
 
-        if (!dto.getPassword().equals(dto.getConfirmPassword())) {
-            throw new UserException(Error.PASSWORD_NOT_MATCH);
-        }
-
         if (userRepository.existsByEmail(dto.getEmail())) {
             throw new UserException(Error.EMAIL_ALREADY_EXISTS);
         }
@@ -30,9 +26,11 @@ public class UserService {
         userRepository.save(dto.toEntity());
     }
 
-    public Boolean isExistEmail(String email) {
+    public void isExistEmail(String email) {
 
-        return userRepository.existsByEmail(email);
+        if (!userRepository.existsByEmail(email)) {
+            throw new UserException(Error.EMAIL_NOT_EXISTS);
+        }
     }
 
     public Boolean login(LoginRequest dto) {
