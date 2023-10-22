@@ -29,11 +29,7 @@ public class UserService {
 
         if (userRepository.existsByEmail(email)) {
             Error error = Error.EMAIL_ALREADY_EXISTS;
-            Map<Object, Object> data = Map.of(
-                    "code", error.getCode(),
-                    "message", error.getDetailMessage(),
-                    "email", email
-            );
+            Map<Object, Object> data = Map.of("email", email);
 
             throw new KurlyException(error, data);
         }

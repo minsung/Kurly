@@ -23,12 +23,7 @@ public class UserController {
 
         if (!request.getPassword().equals(request.getConfirmPassword())) {
             Error error = Error.PASSWORD_NOT_MATCH;
-            Map<Object, Object> data = Map.of(
-                    "code", error.getCode(),
-                    "message", error.getDetailMessage(),
-                    "password", request.getPassword(),
-                    "confirmPassword", request.getConfirmPassword()
-            );
+            Map<Object, Object> data = Map.of("request", request);
 
             throw new KurlyException(error, data);
         }
