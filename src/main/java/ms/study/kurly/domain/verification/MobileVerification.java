@@ -32,9 +32,11 @@ public class MobileVerification {
     @Column(nullable = false)
     private String verificationCode;
 
+    @Setter(AccessLevel.PUBLIC)
     @Column()
     private String hashValue;
 
+    @Setter(AccessLevel.PUBLIC)
     @Column(nullable = false)
     private boolean isVerified;
 

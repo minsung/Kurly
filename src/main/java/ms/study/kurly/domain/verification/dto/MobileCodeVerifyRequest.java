@@ -4,11 +4,12 @@ import lombok.*;
 import ms.study.kurly.common.validator.MobileNumber;
 
 @Data
-@AllArgsConstructor(access = AccessLevel.PACKAGE)
-@NoArgsConstructor(access = AccessLevel.PACKAGE)
+@AllArgsConstructor
+@NoArgsConstructor
 @Setter(AccessLevel.PRIVATE)
-public class MobileVerificationCodeRequest {
+public class MobileCodeVerifyRequest {
 
     @MobileNumber
     private String mobileNumber;
+    private String verificationCode;
 }
