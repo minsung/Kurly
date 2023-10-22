@@ -6,3 +6,12 @@ Content-Type: application/json
 {
   "mobileNumber": "01012345678"
 }
+
+### 휴대폰 번호 인증 코드 확인
+POST {{url}}/verification/mobile-verification-code/verify
+Content-Type: application/json
+
+{
+  "mobileNumber": "01012345678",
+  "verificationCode": "805310"
+}
