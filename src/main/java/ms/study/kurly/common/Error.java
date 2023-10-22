@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum Error {
 
+    EXCEEDED_VERIFICATION_CODE_REQUEST_LIMIT(1000, "요청 횟수를 초과했습니다. 잠시 후 다시 시도해 주세요.", "1분 이내 인증번호 3회 요청 초과"),
     INVALID_EMAIL(1001, "이메일을 확인해주세요.", "이메일 형식 오류"),
     INVALID_PASSWORD(1002, "비밀번호를 확인해주세요.", "비밀번호 형식 오류"),
     INVALID_MOBILE_NUMBER(1003, "휴대폰 번호를 확인해주세요.", "휴대폰 번호 형식 오류"),
