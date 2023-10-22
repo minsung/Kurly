@@ -20,3 +20,5 @@ CREATE TABLE mobile_verification (
   is_verified BIT NOT NULL DEFAULT FALSE,
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE INDEX idx_mobile_number ON mobile_verification(mobile_number);

@@ -17,6 +17,7 @@ public class KurlyExceptionHandler {
     public ResponseEntity<Response<Void>> handleUserException(KurlyException e) {
 
         HttpStatus status = switch (e.getError()) {
+            case EXCEEDED_VERIFICATION_CODE_REQUEST_LIMIT -> HttpStatus.TOO_MANY_REQUESTS;
             case EMAIL_ALREADY_EXISTS -> HttpStatus.CONFLICT;
             case PASSWORD_NOT_MATCH -> HttpStatus.BAD_REQUEST;
             default -> HttpStatus.INTERNAL_SERVER_ERROR;
