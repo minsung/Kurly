@@ -1,5 +1,9 @@
 package ms.study.kurly.common.exception;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import ms.study.kurly.common.Error;
 import ms.study.kurly.common.Response;
 import org.springframework.http.HttpStatus;
@@ -10,11 +14,18 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+@Slf4j
+@RequiredArgsConstructor
 @RestControllerAdvice
 public class KurlyExceptionHandler {
 
+    private final ObjectMapper objectMapper;
+
     @ExceptionHandler(KurlyException.class)
-    public ResponseEntity<Response<Void>> handleUserException(KurlyException e) {
+    public ResponseEntity<Response<Void>> handleUserException(KurlyException e) throws JsonProcessingException {
+
+        String data = objectMapper.writeValueAsString(e.getData());
+        log.error("code: {}, message: {}, error: {}", e.getError().getCode(), e.getError().getDetailMessage(), data, e);
 
         HttpStatus status = switch (e.getError()) {
             case EXCEEDED_VERIFICATION_CODE_REQUEST_LIMIT -> HttpStatus.TOO_MANY_REQUESTS;

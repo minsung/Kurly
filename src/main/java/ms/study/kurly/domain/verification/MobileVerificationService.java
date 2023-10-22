@@ -27,11 +27,7 @@ public class MobileVerificationService {
             MobileVerification verification = verifications.get(2);
             if (verification.getCreatedAt().plusMinutes(1).isAfter(LocalDateTime.now())) {
                 Error error = Error.EXCEEDED_VERIFICATION_CODE_REQUEST_LIMIT;
-                Map<Object, Object> data = Map.of(
-                        "code", error.getCode(),
-                        "message", error.getDetailMessage(),
-                        "mobileNumber", dto.getMobileNumber()
-                );
+                Map<Object, Object> data = Map.of("request", dto);
 
                 throw new KurlyException(error, data);
             }
