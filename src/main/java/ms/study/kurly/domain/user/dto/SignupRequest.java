@@ -28,13 +28,4 @@ public class SignupRequest {
 
     @MobileNumber
     private String mobileNumber;
-
-    public User toEntity() {
-        return User.builder()
-                .email(email)
-                .password(password)
-                .name(name)
-                .mobileNumber(mobileNumber)
-                .build();
-    }
 }

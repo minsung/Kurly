@@ -28,15 +28,13 @@ public class UserController {
             throw new KurlyException(error, data);
         }
 
-        // TODO: 서비스에도 있으니 중복 제거
-        userService.isExistEmail(request.getEmail());
         userService.signup(request);
     }
 
     @GetMapping("/email-exists")
-    public void isExistEmail(@RequestParam String email) {
+    public void checkExistEmail(@RequestParam String email) {
 
-         userService.isExistEmail(email);
+         userService.checkExistEmail(email);
     }
 
     // TODO: 리턴 타입 void로 변경하고 http status code 활용

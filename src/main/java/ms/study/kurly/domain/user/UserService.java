@@ -3,12 +3,17 @@ package ms.study.kurly.domain.user;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import ms.study.kurly.common.Error;
+import ms.study.kurly.domain.terms.Terms;
+import ms.study.kurly.domain.terms.TermsAgreement;
+import ms.study.kurly.domain.terms.TermsAgreementRepository;
+import ms.study.kurly.domain.terms.TermsRepository;
 import ms.study.kurly.domain.user.dto.LoginRequest;
 import ms.study.kurly.domain.user.dto.SignupRequest;
 import ms.study.kurly.common.exception.KurlyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -18,15 +23,32 @@ import java.util.Map;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final TermsAgreementRepository termsAgreementRepository;
+    private final TermsRepository termsRepository;
 
     public void signup(SignupRequest dto) {
 
-        isExistEmail(dto.getEmail());
-        userRepository.save(dto.toEntity());
+        int agreementsCount = termsAgreementRepository.findByEmail(dto.getEmail()).size();
+        int termsCount = termsRepository.findAll().size();
+
+        if (agreementsCount != termsCount) {
+            Error error = Error.TERMS_NOT_FOUND;
+            Map<Object, Object> data = Map.of("request", dto);
+
+            throw new KurlyException(error, data);
+        }
+
+        checkExistEmail(dto.getEmail());
+
+        userRepository.save(User.builder()
+                .email(dto.getEmail())
+                .password(dto.getPassword())
+                .name(dto.getName())
+                .mobileNumber(dto.getMobileNumber())
+                .build());
     }
 
-    // TODO: is로 시작하는 것은 boolean 리턴을 의미. check로 변경하는 것이 좋음 (메서드 이름 의미 생각해보고 고쳐보자)
-    public void isExistEmail(String email) {
+    public void checkExistEmail(String email) {
 
         if (userRepository.existsByEmail(email)) {
             Error error = Error.EMAIL_ALREADY_EXISTS;
