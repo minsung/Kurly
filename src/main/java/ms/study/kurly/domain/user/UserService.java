@@ -58,8 +58,15 @@ public class UserService {
         }
     }
 
-    public Boolean login(LoginRequest dto) {
+    public void login(LoginRequest dto) {
 
-        return userRepository.existsByEmailAndPassword(dto.getEmail(), dto.getPassword());
+       boolean hasUser = userRepository.existsByEmailAndPassword(dto.getEmail(), dto.getPassword());
+
+       if (!hasUser) {
+           Error error = Error.USER_NOT_FOUND;
+           Map<Object, Object> data = Map.of("request", dto);
+
+           throw new KurlyException(error, data);
+       }
     }
 }

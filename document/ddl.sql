@@ -81,7 +81,6 @@ VALUES ('선택 약관 1', '선택 약관 1 내용', FALSE, NOW(), NOW());
 
 # Terms of service (이용약관)
 # 이용약관 동의 정보를 나타내는 엔티티입니다.
-# TODO: FOREIGN KEY -> index만 설정하는 것이 실무에서 일반적 (이유도 정리해보자)
 
 CREATE TABLE terms_agreement
 (
@@ -89,7 +88,7 @@ CREATE TABLE terms_agreement
     email      VARCHAR(255) NOT NULL,
     agreed     BIT          NOT NULL DEFAULT FALSE,
     created_at DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, # TODO: <- 이거 정확히 파악해보고 수정
+    updated_at DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     terms_id   BIGINT,
     INDEX idx_email (email),
     INDEX idx_terms_id (terms_id)

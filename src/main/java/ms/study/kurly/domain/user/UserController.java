@@ -37,10 +37,9 @@ public class UserController {
          userService.checkExistEmail(email);
     }
 
-    // TODO: 리턴 타입 void로 변경하고 http status code 활용
     @PostMapping("/login")
-    public Boolean login(@Valid @RequestBody LoginRequest dto) {
+    public void login(@Valid @RequestBody LoginRequest dto) {
 
-        return userService.login(dto);
+        userService.login(dto);
     }
 }
