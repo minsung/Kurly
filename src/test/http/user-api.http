@@ -20,6 +20,6 @@ POST {{url}}/login
 Content-Type: application/json
 
 {
-  "email": "email",
-  "password": "password"
+  "email": "aa@bb.cc",
+  "password": "Aa12345!"
 }

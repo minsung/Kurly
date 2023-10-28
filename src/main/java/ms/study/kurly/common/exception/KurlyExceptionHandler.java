@@ -21,23 +21,14 @@ public class KurlyExceptionHandler {
 
     private final ObjectMapper objectMapper;
 
-    // TODO: KulryException 아니고 Exception으로 변경 (파라미터 오류 등 공통적인 부분을 처리할 수 있도록)
-    @ExceptionHandler(KurlyException.class)
-    public ResponseEntity<Response<Void>> handleUserException(KurlyException e) throws JsonProcessingException {
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Response<Void>> handleKurlyException(KurlyException e) throws JsonProcessingException {
 
         String data = objectMapper.writeValueAsString(e.getData());
-        // TODO: 로그 레벨 설정 고민
-        log.error("code: {}, message: {}, data: {}", e.getError().getCode(), e.getError().getDetailMessage(), data, e);
 
-        // TODO: enum으로 스테이터스 설정해서 활용하도록
-        HttpStatus status = switch (e.getError()) {
-            case EXCEEDED_VERIFICATION_CODE_REQUEST_LIMIT -> HttpStatus.TOO_MANY_REQUESTS;
-            case MOBILE_VERIFICATION_CODE_NOT_MATCH, EXPIRED_MOBILE_VERIFICATION_CODE, PASSWORD_NOT_MATCH -> HttpStatus.BAD_REQUEST;
-            case EMAIL_ALREADY_EXISTS -> HttpStatus.CONFLICT;
-            default -> HttpStatus.INTERNAL_SERVER_ERROR;
-        };
+        log.info("code: {}, message: {}, data: {}", e.getError().getCode(), e.getError().getDetailMessage(), data, e);
 
-        return ResponseEntity.status(status).body(Response.<Void>builder()
+        return ResponseEntity.status(e.getError().getStatus()).body(Response.<Void>builder()
                 .code(e.getError().getCode())
                 .message(e.getError().getMessage())
                 .build());
