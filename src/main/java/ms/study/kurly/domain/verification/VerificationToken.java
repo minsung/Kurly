@@ -41,6 +41,9 @@ public class VerificationToken {
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
+    @Column(nullable = false)
+    private Long verificationId;
+
     public enum Type {
         MOBILE
     }
