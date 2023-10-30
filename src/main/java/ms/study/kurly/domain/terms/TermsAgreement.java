@@ -31,6 +31,7 @@ public class TermsAgreement {
     private String email;
 
     @Column(nullable = false)
+    @Setter(AccessLevel.PUBLIC)
     private Boolean agreed;
 
     @CreatedDate

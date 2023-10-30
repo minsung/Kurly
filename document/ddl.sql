@@ -34,11 +34,14 @@ CREATE INDEX idx_email ON user (email);
 
 CREATE TABLE verification_token
 (
-    id         BIGINT AUTO_INCREMENT PRIMARY KEY,
-    type       ENUM ('MOBILE') NOT NULL DEFAULT 'MOBILE',
-    token      VARCHAR(64)     NOT NULL,
-    created_at DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    id              BIGINT AUTO_INCREMENT PRIMARY KEY,
+    type            ENUM ('MOBILE') NOT NULL DEFAULT 'MOBILE',
+    token           VARCHAR(64)     NOT NULL,
+    created_at      DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at      DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    verification_id BIGINT,
+    INDEX idx_token(token),
+    INDEX idx_verification_id (verification_id)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
 

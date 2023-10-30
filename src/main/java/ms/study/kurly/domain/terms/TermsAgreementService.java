@@ -2,17 +2,19 @@ package ms.study.kurly.domain.terms;
 
 import lombok.RequiredArgsConstructor;
 import ms.study.kurly.common.Error;
-import ms.study.kurly.common.encryption.EncryptionUtils;
 import ms.study.kurly.common.exception.KurlyException;
 import ms.study.kurly.domain.terms.dto.TermsAgreementRequest;
 import ms.study.kurly.domain.verification.MobileVerification;
 import ms.study.kurly.domain.verification.MobileVerificationRepository;
+import ms.study.kurly.domain.verification.VerificationToken;
+import ms.study.kurly.domain.verification.VerificationTokenRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -22,10 +24,19 @@ public class TermsAgreementService {
     private final TermsRepository termsRepository;
     private final TermsAgreementRepository termsAgreementRepository;
     private final MobileVerificationRepository mobileVerificationRepository;
+    private final VerificationTokenRepository verificationTokenRepository;
 
-    public void agreement(TermsAgreementRequest request) throws Exception {
+    public void agreement(TermsAgreementRequest request) {
 
-        Long mobileVerificationId = EncryptionUtils.decrypt(request.getMobileVerificationToken());
+        VerificationToken token = verificationTokenRepository.findByToken(request.getMobileVerificationToken())
+                .orElseThrow(() -> {
+                    Error error = Error.MOBILE_VERIFICATION_TOKEN_NOT_FOUND;
+                    Map<Object, Object> data = Map.of("request", request);
+
+                    return new KurlyException(error, data);
+                });
+
+        Long mobileVerificationId = token.getVerificationId();
         MobileVerification verification = mobileVerificationRepository.findById(mobileVerificationId)
                 .orElseThrow(() -> {
                     Error error = Error.MOBILE_VERIFICATION_TOKEN_NOT_FOUND;
@@ -42,6 +53,7 @@ public class TermsAgreementService {
         }
 
         List<Terms> termsList = termsRepository.findAll();
+        List<TermsAgreement> agreements = termsAgreementRepository.findByEmail(request.getEmail());
 
         termsList.forEach(terms -> {
             TermsAgreementRequest.Agreement requestAgreement = Arrays.stream(request.getAgreements())
@@ -61,11 +73,20 @@ public class TermsAgreementService {
                 throw new KurlyException(error, data);
             }
 
-            termsAgreementRepository.save(TermsAgreement.builder()
-                    .email(request.getEmail())
-                    .agreed(requestAgreement.getAgreed())
-                    .terms(terms)
-                    .build());
+            Optional<TermsAgreement> existingAgreement = agreements.stream()
+                    .filter(agreement -> agreement.getTerms().getId().equals(terms.getId()))
+                    .findFirst();
+
+            if (existingAgreement.isPresent()) {
+                existingAgreement.get().setAgreed(requestAgreement.getAgreed());
+                termsAgreementRepository.save(existingAgreement.get());
+            } else {
+                termsAgreementRepository.save(TermsAgreement.builder()
+                        .email(request.getEmail())
+                        .agreed(requestAgreement.getAgreed())
+                        .terms(terms)
+                        .build());
+            }
         });
     }
 }

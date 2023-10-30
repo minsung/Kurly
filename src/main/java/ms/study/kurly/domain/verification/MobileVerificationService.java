@@ -45,7 +45,7 @@ public class MobileVerificationService {
         mobileVerificationRepository.save(mobileVerification);
     }
 
-    public Response<MobileCodeVerifyResponse> verifyMobileVerificationCode(MobileCodeVerifyRequest dto) throws Exception {
+    public Response<MobileCodeVerifyResponse> verifyMobileVerificationCode(MobileCodeVerifyRequest dto) {
 
         MobileVerification verification = mobileVerificationRepository
                 .findFirstByMobileNumberOrderByCreatedAtDesc(dto.getMobileNumber())
@@ -70,15 +70,15 @@ public class MobileVerificationService {
             throw new KurlyException(error, data);
         }
 
-        VerificationToken token = verificationTokenService.generate(VerificationTokenRequest.builder()
+        VerificationToken verificationToken = verificationTokenService.generate(VerificationTokenRequest.builder()
                 .verificationId(verification.getId())
                 .type(VerificationToken.Type.MOBILE)
                 .build());
 
-        verification.setVerificationToken(token);
+        verification.setVerificationToken(verificationToken);
 
         return Response.<MobileCodeVerifyResponse>builder()
-                .data(new MobileCodeVerifyResponse(token.getToken()))
+                .data(new MobileCodeVerifyResponse(verificationToken.getToken()))
                 .build();
     }
 }

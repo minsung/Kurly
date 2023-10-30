@@ -13,7 +13,6 @@ import lombok.*;
 public class TermsAgreementRequest {
 
     @Schema(description = "이용 약관 동의 목록")
-    @NotBlank
     private Agreement[] agreements;
 
     @Schema(description = "이메일 주소", defaultValue = "aa@bb.cc")
@@ -21,7 +20,6 @@ public class TermsAgreementRequest {
     private String email;
 
     @Schema(description = "휴대폰 인증 응답으로 전달받은 위변조 방지 토큰")
-    @NotBlank
     private String mobileVerificationToken;
 
     @Schema(description = "이용 약관 동의 내용")
