@@ -21,7 +21,7 @@ public class KurlyExceptionHandler {
 
     private final ObjectMapper objectMapper;
 
-    @ExceptionHandler(Exception.class)
+    @ExceptionHandler(KurlyException.class)
     public ResponseEntity<Response<Void>> handleKurlyException(KurlyException e) throws JsonProcessingException {
 
         String data = objectMapper.writeValueAsString(e.getData());

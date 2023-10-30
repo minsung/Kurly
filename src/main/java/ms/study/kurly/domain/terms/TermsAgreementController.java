@@ -14,7 +14,7 @@ public class TermsAgreementController {
     private final TermsAgreementService service;
 
     @PostMapping("/terms/agreement")
-    public void agreement(@Valid @RequestBody TermsAgreementRequest request) throws Exception {
+    public void agreement(@Valid @RequestBody TermsAgreementRequest request) {
 
         service.agreement(request);
     }
