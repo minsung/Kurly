@@ -23,11 +23,12 @@ CREATE TABLE user
     mobile_number VARCHAR(20)                            NOT NULL,
     status        ENUM ('ACTIVE', 'INACTIVE', 'DELETED') NOT NULL DEFAULT 'ACTIVE',
     created_at    DATETIME                               NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at    DATETIME                               NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    updated_at    DATETIME                               NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    INDEX idx_email (email)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
 
-CREATE INDEX idx_email ON user (email);
+
 
 # Verification tokens (인증 토큰)
 # 인증 토큰 정보를 나타내는 엔티티입니다.

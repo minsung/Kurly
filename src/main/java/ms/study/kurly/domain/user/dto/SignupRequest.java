@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import ms.study.kurly.common.validator.MobileNumber;
 import ms.study.kurly.common.validator.Password;
+import ms.study.kurly.domain.terms.dto.Agreement;
 
 @Schema(description = "회원가입 요청")
 @Data
@@ -34,4 +35,11 @@ public class SignupRequest {
     @MobileNumber
     @Schema(description = "휴대폰 번호", defaultValue = "01012345678")
     private String mobileNumber;
+
+    @Schema(description = "이용 약관 동의 목록")
+    private Agreement[] agreements;
+
+    @NotBlank
+    @Schema(description = "휴대폰 인증 응답으로 전달받은 위변조 방지 토큰")
+    private String mobileVerificationToken;
 }
