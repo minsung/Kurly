@@ -70,11 +70,7 @@ public class MobileVerificationService {
             throw new KurlyException(error, data);
         }
 
-        VerificationToken verificationToken = verificationTokenService.generate(VerificationTokenRequest.builder()
-                .verificationId(verification.getId())
-                .type(VerificationToken.Type.MOBILE)
-                .build());
-
+        VerificationToken verificationToken = verificationTokenService.generate(VerificationToken.Type.MOBILE, verification.getId());
         verification.setVerificationToken(verificationToken);
 
         return Response.<MobileCodeVerifyResponse>builder()

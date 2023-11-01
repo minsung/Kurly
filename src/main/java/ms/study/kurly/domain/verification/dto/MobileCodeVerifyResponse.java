@@ -10,6 +10,6 @@ import lombok.*;
 @Setter(AccessLevel.PRIVATE)
 public class MobileCodeVerifyResponse {
 
-    @Schema(description = "이용 약관 요청 위변조 방지 토큰")
+    @Schema(description = "회원 가입시 위변조 방지 토큰")
     private String token;
 }

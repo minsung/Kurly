@@ -2,7 +2,6 @@ package ms.study.kurly.domain.verification;
 
 import jakarta.persistence.*;
 import lombok.*;
-import ms.study.kurly.domain.verification.dto.VerificationTokenResponse;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -46,9 +45,5 @@ public class VerificationToken {
 
     public enum Type {
         MOBILE
-    }
-
-    public VerificationTokenResponse toResponse() {
-        return new VerificationTokenResponse(id);
     }
 }
