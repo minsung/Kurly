@@ -2,8 +2,6 @@ package ms.study.kurly.domain.terms;
 
 import jakarta.persistence.*;
 import lombok.*;
-import ms.study.kurly.domain.user.User;
-import ms.study.kurly.domain.verification.VerificationToken;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -42,6 +40,6 @@ public class TermsAgreement {
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
-    @ManyToOne
-    private Terms terms;
+    @Column(nullable = false)
+    private Long termsId;
 }

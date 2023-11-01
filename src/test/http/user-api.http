@@ -8,7 +8,22 @@ Content-Type: application/json
   "password": "Aa12345!",
   "confirmPassword": "Aa12345!",
   "name": "name",
-  "mobileNumber": "01012345678"
+  "mobileNumber": "01012345678",
+  "agreements": [
+    {
+      "id": 1,
+      "agreed": true
+    },
+    {
+      "id": 2,
+      "agreed": true
+    },
+    {
+      "id": 3,
+      "agreed": false
+    }
+  ],
+  "mobileVerificationToken": "5514765e-2a3f-4d6e-af48-a27e8c393e1f"
 }
 
 ### 중복된 이메일 존재 여부 확인
