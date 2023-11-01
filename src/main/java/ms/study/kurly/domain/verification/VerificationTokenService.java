@@ -3,7 +3,6 @@ package ms.study.kurly.domain.verification;
 import lombok.RequiredArgsConstructor;
 import ms.study.kurly.common.Error;
 import ms.study.kurly.common.exception.KurlyException;
-import ms.study.kurly.domain.verification.dto.VerificationTokenRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,14 +16,14 @@ public class VerificationTokenService {
 
     private final VerificationTokenRepository verificationTokenRepository;
 
-    public VerificationToken generate(VerificationTokenRequest request) {
+    public VerificationToken generate(VerificationToken.Type type, Long verificationId) {
 
         String token = UUID.randomUUID().toString();
 
         VerificationToken verificationToken = VerificationToken.builder()
-                .type(request.getType())
+                .type(type)
                 .token(token)
-                .verificationId(request.getVerificationId())
+                .verificationId(verificationId)
                 .build();
 
         return verificationTokenRepository.save(verificationToken);
