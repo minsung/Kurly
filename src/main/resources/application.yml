@@ -9,6 +9,10 @@ spring:
     hibernate:
       ddl-auto: update
 
+jwt:
+  issuer: eclipse65@gmail.com
+  secret_key: study-kurly
+
 logging:
   level:
     root: info

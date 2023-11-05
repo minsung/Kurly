@@ -6,7 +6,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import ms.study.kurly.common.Error;
+import ms.study.kurly.common.Response;
+import ms.study.kurly.domain.jwt.TokenService;
 import ms.study.kurly.domain.user.dto.LoginRequest;
+import ms.study.kurly.domain.user.dto.LoginResponse;
 import ms.study.kurly.domain.user.dto.SignupRequest;
 import ms.study.kurly.common.exception.KurlyException;
 import org.springframework.http.HttpStatus;
@@ -20,6 +23,7 @@ import java.util.Map;
 public class UserController {
 
     private final UserService userService;
+    private final TokenService tokenService;
 
     @Operation(summary = "회원가입")
     @PostMapping("/signup")
@@ -46,8 +50,8 @@ public class UserController {
 
     @Operation(summary = "로그인")
     @PostMapping("/login")
-    public void login(@Valid @RequestBody LoginRequest dto) {
+    public Response<LoginResponse> login(@Valid @RequestBody LoginRequest dto) {
 
-        userService.login(dto);
+        return userService.login(dto);
     }
 }
