@@ -98,3 +98,18 @@ CREATE TABLE terms_agreement
     INDEX idx_terms_id (terms_id)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
+
+# JWT refresh tokens (JWT 리프레시 토큰)
+# JWT 리프레시 토큰 정보를 나타내는 엔티티입니다.
+
+CREATE TABLE refresh_token
+(
+    id            BIGINT AUTO_INCREMENT PRIMARY KEY,
+    refresh_token VARCHAR(255) NOT NULL,
+    created_at    DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at    DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    user_id       BIGINT,
+    INDEX idx_user_id (user_id),
+    INDEX idx_refresh_token (refresh_token)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;

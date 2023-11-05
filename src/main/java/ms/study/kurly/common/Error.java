@@ -21,6 +21,9 @@ public enum Error {
     PASSWORD_NOT_MATCH(1010, "비밀번호를 확인해주세요.", "비밀번호 불일치", HttpStatus.BAD_REQUEST),
     EMAIL_ALREADY_EXISTS(1011, "이메일을 확인해주세요.", "이미 존재하는 이메일", HttpStatus.CONFLICT),
     USER_NOT_FOUND(1012, "잘못된 요청입니다.", "사용자 정보 없음", HttpStatus.BAD_REQUEST),
+    REFRESH_TOKEN_NOT_FOUND(1013, "잘못된 요청입니다.", "리프레시 토큰 없음", HttpStatus.BAD_REQUEST),
+    INVALID_REFRESH_TOKEN(1014, "잘못된 요청입니다.", "리프레시 토큰 불일치", HttpStatus.BAD_REQUEST),
+    INVALID_USER(1015, "잘못된 요청입니다.", "사용자 정보 불일치", HttpStatus.BAD_REQUEST),
     UNKNOWN(9999, "오류가 발생했습니다.", "알 수 없는 오류", HttpStatus.INTERNAL_SERVER_ERROR);
 
     private final Integer code;
