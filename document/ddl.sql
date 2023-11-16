@@ -113,3 +113,57 @@ CREATE TABLE refresh_token
     INDEX idx_refresh_token (refresh_token)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
+
+# Category (카테고리)
+# 상품 카테고리 정보를 나타내는 엔티티입니다.
+
+CREATE TABLE categories
+(
+    id         BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name       VARCHAR(255) NOT NULL,
+    created_at DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    INDEX idx_name (name)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
+
+# Product (상품)
+# 상품 정보를 나타내는 엔티티입니다.
+
+CREATE TABLE products
+(
+    id             BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name           VARCHAR(255)                NOT NULL,
+    description    TEXT                        NOT NULL,
+    supply_price   BIGINT                      NOT NULL,
+    consumer_price BIGINT                      NOT NULL,
+    sale_price     BIGINT                      NOT NULL,
+    stock_quantity BIGINT                      NOT NULL,
+    status         ENUM ('ACTIVE', 'INACTIVE') NOT NULL DEFAULT 'INACTIVE',
+    category_id    BIGINT                      NOT NULL,
+    discount_id    BIGINT                      NOT NULL,
+    created_at     DATETIME                    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at     DATETIME                    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FULLTEXT INDEX idx_fulltext_search (name, description),
+    INDEX idx_category_id (category_id),
+    INDEX discount_id (discount_id)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
+
+# Discount (할인)
+# 할인 정보를 나타내는 엔티티입니다.
+
+CREATE TABLE discounts
+(
+    id         BIGINT AUTO_INCREMENT PRIMARY KEY,
+    type       ENUM ('PERCENTAGE', 'AMOUNT') NOT NULL DEFAULT 'PERCENTAGE',
+    name       VARCHAR(255)                  NOT NULL,
+    value      BIGINT                        NOT NULL,
+    status     ENUM ('ACTIVE', 'INACTIVE')   NOT NULL DEFAULT 'INACTIVE',
+    started_at DATETIME                      NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    ended_at   DATETIME                      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    created_at DATETIME                      NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME                      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    INDEX idx_name (name)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
